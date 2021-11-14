@@ -1,0 +1,1 @@
+EXEC xmlOpenDemo @strXml='XML'

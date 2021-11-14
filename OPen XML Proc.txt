@@ -1,0 +1,32 @@
+Create PROC openxmldemotry  @dataxml xml
+as
+
+Declare @hdoc int
+Declare @Doc xml
+
+Set @Doc = @dataxml
+
+
+ExEC sp_xml_prepareDocument @hdoc output, @Doc
+
+Select @hdoc
+
+
+
+
+Declare @idoc int
+Set @idoc = 1
+
+insert into CustomerDetails 
+
+Select t.customerid, t.name, t.country  from OPENXML(@idoc,'/customer',3)
+with(
+	customerid int,
+	name varchar(100),
+	country varchar(100)
+)t
+
+GO
+
+
+

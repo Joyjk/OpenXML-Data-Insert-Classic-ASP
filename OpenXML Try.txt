@@ -1,0 +1,30 @@
+Declare @hdoc int
+Declare @Doc xml
+
+Set @Doc = '<Customers>
+ <Customer Id ="1">
+    <Name>John Hammond11</Name>
+    <Country>United States22</Country>
+ </Customer>
+ <Customer Id = "2">
+    <Name>Mudassar Khan33</Name>
+    <Country>India22</Country>
+ </Customer>
+    <Customer Id ="3">
+    <Name>Suzanne Mathews55</Name>
+    <Country>France55</Country>
+ </Customer>
+    <Customer Id ="4">
+    <Name>Robert Schidner22</Name>
+    <Country>Russia22</Country>
+ </Customer>
+</Customers>'
+
+ExEC sp_xml_prepareDocument @hdoc output, @Doc
+
+Select @hdoc
+
+Declare @idoc int
+Set @idoc = 1
+
+Select * from OPENXML(@idoc,'/Customers/Customer/Name')

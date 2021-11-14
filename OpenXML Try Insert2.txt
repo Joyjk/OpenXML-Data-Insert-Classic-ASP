@@ -1,0 +1,53 @@
+Declare @hdoc int
+Declare @Doc xml
+
+Set @Doc = '<Customers>
+ <Customer Id ="52">
+    <Name>John Hammond11</Name>
+    <Country>United States22</Country>
+ </Customer>
+ <Customer Id = "62">
+    <Name>Mudassar Khan33</Name>
+    <Country>India22</Country>
+ </Customer>
+    <Customer Id ="72">
+    <Name>Suzanne Mathews55</Name>
+    <Country>France55</Country>
+ </Customer>
+    <Customer Id ="82">
+    <Name>Robert Schidner22</Name>
+    <Country>Russia22</Country>
+ </Customer>
+</Customers>'
+
+
+ExEC sp_xml_prepareDocument @hdoc output, @Doc
+
+Select @hdoc
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Declare @idoc int
+Set @idoc = 1
+
+insert into dbo.CustomerDetails
+
+Select t.Id, t.Name, t.Country  from OPENXML(@idoc,'/Customers/Customer',3)
+with(
+	Id int,
+	Name varchar(100),
+	Country varchar(100)
+)t
+
+EXEC sp_xml_removedocument @idoc
